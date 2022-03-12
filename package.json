@@ -1,0 +1,26 @@
+{
+  "name": "dexscreener-to-notion",
+  "version": "0.0.1",
+  "description": "🦉 Import current price of a chart in a notion database ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Craaftx/dexscreener-to-notion"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "node-fetch": "^3.2.2",
+    "nodemon": "^2.0.15",
+    "puppeteer": "^13.5.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1"
+  }
+}
