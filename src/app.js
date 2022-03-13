@@ -1,32 +1,38 @@
 import { CronJob } from 'cron'
+import dotenv from 'dotenv'
 import { getLastUsdValue } from './api/dexscreener.js'
 import { getPagesFromDatabase, patchPage } from './api/notion.js'
 
+dotenv.config()
+
 const fillDatabase = async (databaseId) => {
+  const urlKey = process.env.NOTION_URL_KEY
+  const valueKey = process.env.NOTION_VALUE_KEY
+
   const pages = await getPagesFromDatabase({ id: databaseId })
 
   await Promise.all(
     pages.map(async (page) => {
-      if (!page.properties['dex_link']) {
+      if (!page.properties[urlKey]) {
         console.error(`Can't find the property 'dex_link' in the notion page ${page.id}`)
         return
       }
 
-      if (!page.properties['dex_link'].url) {
+      if (!page.properties[urlKey].url) {
         console.error(
           `The property 'dex_link' is not of URL type in the notion page ${page.id}`,
         )
         return
       }
 
-      if (page.properties['dex_link'].url.split('/')['2'] !== 'dexscreener.com') {
+      if (page.properties[urlKey].url.split('/')['2'] !== 'dexscreener.com') {
         console.error(
           `The property 'dex_link' is not a dexscreener url in the notion page ${page.id}`,
         )
         return
       }
 
-      const link = page.properties['dex_link'].url
+      const link = page.properties[urlKey].url
 
       const value = await getLastUsdValue({
         url: link,
@@ -35,7 +41,7 @@ const fillDatabase = async (databaseId) => {
       const parsedPage = await patchPage({
         id: page.id,
         properties: {
-          dex_value: {
+          [valueKey]: {
             number: value,
           },
         },
@@ -49,13 +55,20 @@ const fillDatabase = async (databaseId) => {
 }
 
 const app = async () => {
-  new CronJob(
-    '*/2 * * * *',
-    () => fillDatabase('2cdca92a0c944cb6ad39e1175e6297c8'),
-    null,
-    true,
-    'America/Los_Angeles',
-  )
+  const databases = JSON.parse(process.env.NOTION_DATABASES)
+
+  if (!databases || databases.length === 0) {
+    console.error('Add some databases to start and retry')
+    return
+  }
+
+  for (let index = 0; index < databases.length; index++) {
+    const id = databases[index]
+
+    new CronJob('*/2 * * * *', () => fillDatabase(id), null, true, 'America/Los_Angeles')
+
+    console.log('Add CRON job for database:', id)
+  }
 }
 
 export default app
