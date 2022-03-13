@@ -13,10 +13,12 @@
     },
     "NOTION_VALUE_KEY": {
       "description": "The key of the value column.",
+      "value": "dex_value",
       "required": "true"
     },
     "NOTION_URL_KEY": {
       "description": "The key of the dexscreener link column of type URL.",
+      "value": "dex_url",
       "required": "true"
     },
     "CRON_DELAY": {
@@ -24,12 +26,7 @@
       "value": "0"
     }
   },
-  "addons": [
-    {
-      "plan": "scheduler:standard",
-      "as": "scheduler"
-    }
-  ],
+  "addons": ["scheduler:standard"],
   "scripts": {
     "postdeploy": "heroku addons:open scheduler"
   }
