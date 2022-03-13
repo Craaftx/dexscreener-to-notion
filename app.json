@@ -26,8 +26,5 @@
       "value": "0"
     }
   },
-  "addons": ["scheduler:standard"],
-  "scripts": {
-    "postdeploy": "heroku addons:open scheduler"
-  }
+  "addons": ["scheduler:standard"]
 }
