@@ -20,7 +20,14 @@
       "required": "true"
     },
     "CRON_DELAY": {
-      "description": "The delay in minutes between each digit update (by default 30). The smaller the value, the more energy the server consumes."
+      "description": "The delay in minutes between each digit update (by default 30). If the value is equal to 0, the app will be executed once",
+      "value": "0"
     }
-  }
+  },
+  "addons": [
+    {
+      "plan": "scheduler:standard",
+      "as": "scheduler"
+    }
+  ]
 }
