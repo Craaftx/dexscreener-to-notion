@@ -12,6 +12,7 @@
     "url": "https://github.com/Craaftx/dexscreener-to-notion"
   },
   "dependencies": {
+    "cron": "^1.8.2",
     "dotenv": "^16.0.0",
     "node-fetch": "^3.2.2",
     "nodemon": "^2.0.15",
