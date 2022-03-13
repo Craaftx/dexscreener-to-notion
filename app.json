@@ -1,0 +1,23 @@
+{
+  "name": "Dexscreener to Notion",
+  "description": "🦉 Import current price of a chart in a notion database",
+  "repository": "https://github.com/Craaftx/dexscreener-to-notion",
+  "env": {
+    "NOTION_SECRET": {
+      "description": "A secret key for access to Notion API.",
+      "required": "true"
+    },
+    "NOTION_DATABASES": {
+      "description": "A strigified array of all the IDs of your Notion databases.",
+      "required": "true"
+    },
+    "NOTION_VALUE_KEY": {
+      "description": "The key of the value column.",
+      "required": "true"
+    },
+    "NOTION_URL_KEY": {
+      "description": "The key of the dexscreener link column of type URL.",
+      "required": "true"
+    }
+  }
+}
