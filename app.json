@@ -29,5 +29,8 @@
       "plan": "scheduler:standard",
       "as": "scheduler"
     }
-  ]
+  ],
+  "scripts": {
+    "postdeploy": "heroku addons:open scheduler"
+  }
 }
