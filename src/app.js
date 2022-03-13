@@ -55,7 +55,7 @@ const fillDatabase = async (databaseId) => {
 }
 
 const app = async () => {
-  const delay = parseInt(process.env.CRON_DELAY) || 30
+  const delay = parseInt(process.env.CRON_DELAY)
 
   const databases = JSON.parse(process.env.NOTION_DATABASES)
 
@@ -71,13 +71,13 @@ const app = async () => {
       fillDatabase(id)
     } else {
       new CronJob(
-        `*/${delay} * * * *`,
+        `*/${delay || 30} * * * *`,
         () => fillDatabase(id),
         null,
         true,
         'America/Los_Angeles',
       )
-      console.log(`Add CRON job each ${delay} minutes for database:`, id)
+      console.log(`Add CRON job each ${delay || 30} minutes for database:`, id)
     }
   }
 }
